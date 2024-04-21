@@ -18,4 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    return response()->json(['success' => true]);
+});
+
 Route::get('init-payment', [PaymentController::class, 'initPayment']);
