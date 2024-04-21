@@ -16,6 +16,7 @@ class CreatePaymentTransactionsTable extends Migration
         Schema::create('payment_transactions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->string('transaction_id')->unique();
             $table->json('data');
             $table->timestamps();
         });
