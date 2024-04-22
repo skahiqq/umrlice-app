@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return response()->json(['test' => $_SERVER['REMOTE_HOST']]);
+    return response()->json(['test' => $_SERVER['REMOTE_ADDR']]);
     dd(\App\Models\Cart::first());
     return response()->json(['success' => true]);
 });
