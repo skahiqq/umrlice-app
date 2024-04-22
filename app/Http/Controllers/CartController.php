@@ -30,7 +30,7 @@ class CartController extends Controller
 
         $cart->update([
             'price' => request()->price ?: $cart->price,
-            'data' => request()->data ? json_decode(request()->data) : $cart->data ? json_decode($cart->data) : null,
+            'data' => request()->data ? json_decode(request()->data) : ($cart->data ? json_decode($cart->data) : null),
         ]);
     }
 
