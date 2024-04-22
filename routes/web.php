@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,14 @@ Route::group([
     'prefix' => 'api'
 ], function () {
     Route::get('init-payment', [PaymentController::class, 'initPayment']);
+    // cart
+    Route::group([
+        'prefix' => 'cart'
+    ], function () {
+        Route::get('create', [CartController::class, 'insert']);
+        Route::get('get', [CartController::class, 'get']);
+        Route::get('update', [CartController::class, 'update']);
+        Route::get('delete', [CartController::class, 'destroy']);
+    });
 });
 
