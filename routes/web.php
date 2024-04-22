@@ -22,4 +22,9 @@ Route::get('/test', function () {
     return response()->json(['success' => true]);
 });
 
-Route::post('init-payment', [PaymentController::class, 'initPayment']);
+Route::group([
+    'prefix' => 'api'
+], function () {
+    Route::post('init-payment', [PaymentController::class, 'initPayment']);
+});
+
