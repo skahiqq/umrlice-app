@@ -20,13 +20,12 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return response()->json(['test' => $_SERVER['REMOTE_ADDR']]);
-    dd(\App\Models\Cart::first());
     return response()->json(['success' => true]);
 });
 
 Route::group([
-    'prefix' => 'api'
+    'prefix' => 'api/{api_token}',
+    'middleware' => 'api_token'
 ], function () {
     Route::get('init-payment', [PaymentController::class, 'initPayment']);
     // cart
