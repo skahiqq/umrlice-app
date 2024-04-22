@@ -28,9 +28,18 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', request()->user_id)->first();
 
+        $data = null;
+        if (request()->data) {
+            $data = json_decode(request()->data);
+        } else {
+            if ($cart->data) {
+                $data = json_decode($cart->data);
+            }
+        }
+
         $cart->update([
             'price' => request()->price ?: $cart->price,
-            'data' => request()->data ? json_decode(request()->data) : ($cart->data ? json_decode($cart->data) : null),
+            'data' => $data, //request()->data ? json_decode(request()->data) : ($cart->data ? json_decode($cart->data) : null)
         ]);
     }
 
