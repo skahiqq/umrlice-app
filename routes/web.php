@@ -33,7 +33,7 @@ Route::group([
     ], function () {
         Route::get('create', [CartController::class, 'insert']);
         Route::get('get', [CartController::class, 'get']);
-        Route::post('update', [CartController::class, 'update']);
+        Route::get('update', [CartController::class, 'update']);
         Route::get('delete', [CartController::class, 'destroy']);
     });
 });
