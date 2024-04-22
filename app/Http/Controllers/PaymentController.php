@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -21,6 +22,8 @@ class PaymentController extends Controller
         $day = $day < 10 ? '0' . $day : $day;
         $transactionId = $year . '-' . $month . '-' . $day . '-' . ($lastTransaction ? $lastTransaction->id + 1 : 1);
 
+        $cart = Cart::where('user_id', request()->user_id)->first();
+
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
@@ -29,7 +32,7 @@ class PaymentController extends Controller
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/debit', [
                 'merchantTransactionId' => $transactionId,
-                'amount' => request()->price,
+                'amount' => (double) $cart->price,
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
                 'successUrl' => 'https://umrlice.vercel.app/payment-success',
@@ -43,6 +46,11 @@ class PaymentController extends Controller
                 'user_id' => 1,
                 'transaction_id' => $transactionId,
                 'data' => $jsonResponse
+            ]);
+
+            $cart->update([
+                'price' => null,
+                'data' => null
             ]);
 
             return $jsonResponse;
