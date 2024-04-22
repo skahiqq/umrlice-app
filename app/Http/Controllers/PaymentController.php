@@ -49,7 +49,9 @@ class PaymentController extends Controller
                 'data' => $jsonResponse
             ]);
 
-            if ($jsonResponse['success'] === true) {
+            $decodedJsonResponse = json_decode($jsonResponse, TRUE);
+
+            if ($decodedJsonResponse['success'] === true) {
                 $cart->update([
                     'price' => null,
                     'data' => null
