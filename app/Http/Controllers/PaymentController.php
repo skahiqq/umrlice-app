@@ -32,18 +32,20 @@ class PaymentController extends Controller
                 'amount' => '9.99',
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
-                'successUrl' => 'https://umrlice-e44rgsm58-ardis-projects-0c0d2ea9.vercel.app/poslednji-pozdravi',
-                'cancelUrl' => 'https://5e5e-46-99-63-213.ngrok-free.app/redirected.php',
-                'errorUrl' => 'https://5e5e-46-99-63-213.ngrok-free.app/redirected.php'
+                'successUrl' => 'https://umrlice.vercel.app/payment-success',
+                'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
+                'errorUrl' => 'https://umrlice.vercel.app/payment-error'
             ]);
+
+            $jsonResponse = $response->body();
 
             PaymentTransaction::create([
                 'user_id' => 1,
                 'transaction_id' => $transactionId,
-                'data' => "{}"
+                'data' => $jsonResponse
             ]);
 
-            return $response->body();
+            return $jsonResponse;
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false]);
