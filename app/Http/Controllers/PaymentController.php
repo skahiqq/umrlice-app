@@ -49,10 +49,12 @@ class PaymentController extends Controller
                 'data' => $jsonResponse
             ]);
 
-            $cart->update([
-                'price' => null,
-                'data' => null
-            ]);
+            if ($jsonResponse['success'] === true) {
+                $cart->update([
+                    'price' => null,
+                    'data' => null
+                ]);
+            }
 
             return $jsonResponse;
         } catch (\Exception $e) {
