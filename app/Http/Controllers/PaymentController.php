@@ -33,7 +33,7 @@ class PaymentController extends Controller
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/debit', [
                 'merchantTransactionId' => $transactionId,
-                'amount' => (double) $cart->price,
+                'amount' => $cart->price,
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
                 'successUrl' => 'https://umrlice.vercel.app/payment-success',
