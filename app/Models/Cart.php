@@ -14,4 +14,8 @@ class Cart extends Model
         'price',
         'data'
     ];
+
+    protected $casts = [
+        'data' => 'json'
+    ];
 }
