@@ -24,7 +24,7 @@ class PaymentController extends Controller
 
         $cart = Cart::where('user_id', request()->user_id)->first();
 
-        Log::info(json_encode($cart));
+        Log::info(json_encode($cart->price));
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
