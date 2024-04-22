@@ -28,7 +28,7 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', request()->user_id)->first();
 
-        dd($cart);
+        return $cart;
         $cart->update([
             'price' => request()->price ?: $cart->price,
             'data' => request()->data ? json_decode(request()->data) : ($cart->data ? json_decode($cart->data) : null),
