@@ -36,6 +36,7 @@ Route::group([
         Route::get('get', [CartController::class, 'get']);
         Route::get('update', [CartController::class, 'update']);
         Route::get('delete', [CartController::class, 'destroy']);
+        Route::get('empty-fields', [CartController::class, 'setNull']);
     });
 });
 

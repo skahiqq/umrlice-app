@@ -39,4 +39,11 @@ class CartController extends Controller
         Cart::where('user_id', request()->user_id)->delete();
     }
 
+    public function setNull()
+    {
+        Cart::where('user_id', request()->user_id)->update([
+            'price' => null,
+            'data' => null
+        ]);
+    }
 }
