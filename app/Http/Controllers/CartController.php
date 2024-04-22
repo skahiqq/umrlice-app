@@ -28,13 +28,6 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', request()->user_id)->first();
 
-        if (request()->price) {
-            $cart->update([
-                'price' => request()->price ?: $cart->price,
-                'data' => null,
-            ]);
-        }
-
         $cart->update([
             'price' => request()->price ?: $cart->price,
             'data' => request()->data ?: $cart->data,
