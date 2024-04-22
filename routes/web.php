@@ -25,6 +25,6 @@ Route::get('/test', function () {
 Route::group([
     'prefix' => 'api'
 ], function () {
-    Route::post('init-payment', [PaymentController::class, 'initPayment']);
+    Route::get('init-payment', [PaymentController::class, 'initPayment']);
 });
 
