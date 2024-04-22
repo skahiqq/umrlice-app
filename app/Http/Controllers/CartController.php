@@ -9,9 +9,14 @@ class CartController extends Controller
 {
     public function insert()
     {
-        return Cart::create([
-            'user_id' => request()->user_id
-        ]);
+        $cart = Cart::where([
+                    'user_id' => request()->user_id
+                ])->first();
+        if (!$cart) {
+            Cart::create([
+                'user_id' => request()->user_id
+            ]);
+        }
     }
 
     public function get()
