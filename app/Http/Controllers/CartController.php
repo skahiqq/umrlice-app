@@ -28,10 +28,18 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', request()->user_id)->first();
 
-        $cart->update([
-            'price' => request()->price ?: $cart->price,
-            'data' => request()->data ? json_decode(request()->data) : ($cart->data ? json_decode($cart->data) : null)
-        ]);
+        if (request()->price) {
+            $cart->update([
+                'price' => request()->price ?: $cart->price,
+                'data' => null
+            ]);
+        }
+
+        if (request()->data) {
+            $cart->update([
+                'data' => json_decode(request()->data)
+            ]);
+        }
     }
 
     public function destroy()
