@@ -26,12 +26,26 @@ class PaymentController extends Controller
 
         Log::info(json_encode($cart->price));
         try {
-            $response = Http::withHeaders([
+            /*$response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/debit', [
+                'merchantTransactionId' => $transactionId,
+                'amount' => $cart->price,
+                'currency' => 'EUR',
+                'transactionToken' => request()->token,
+                'successUrl' => 'https://umrlice.vercel.app/payment-success',
+                'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
+                'errorUrl' => 'https://umrlice.vercel.app/payment-error'
+            ]);*/
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
+                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
+            ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/preauthorize', [
                 'merchantTransactionId' => $transactionId,
                 'amount' => $cart->price,
                 'currency' => 'EUR',
