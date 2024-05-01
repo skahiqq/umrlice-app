@@ -109,7 +109,7 @@ class PaymentController extends Controller
             return $jsonResponse;
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
-            return response()->json(['success' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }
