@@ -32,7 +32,7 @@ class PaymentController extends Controller
                 'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/preauthorize', [ // debit
-                'merchantTransactionId' => $transactionId,
+                'merchantTransactionId' => '20-2-2-2',
                 'amount' => $cart->price,
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
