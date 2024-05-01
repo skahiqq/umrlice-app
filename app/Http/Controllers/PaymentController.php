@@ -60,9 +60,8 @@ class PaymentController extends Controller
 
     public function setPostId()
     {
-        return "trst";
         $transactionWithoutPost = PaymentTransaction::where('user_id', request()->user_id)
-            ->whereNull('post_id')
+            ->where('post_id', null)
             ->first();
 
         if ($transactionWithoutPost) {
