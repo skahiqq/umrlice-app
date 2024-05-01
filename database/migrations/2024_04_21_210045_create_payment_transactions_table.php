@@ -18,6 +18,7 @@ class CreatePaymentTransactionsTable extends Migration
             $table->integer('user_id');
             $table->string('post_id')->nullable();
             $table->string('price')->nullable();
+            $table->integer('type');
             $table->string('transaction_id')->unique();
             $table->json('data');
             $table->timestamps();

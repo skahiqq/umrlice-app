@@ -62,11 +62,13 @@ class PaymentController extends Controller
     {
         $transactionWithoutPost = PaymentTransaction::where('user_id', request()->user_id)
             ->where('post_id', null)
+            ->orderBy('created_at', 'DESC')
             ->first();
 
         if ($transactionWithoutPost) {
             $transactionWithoutPost->update([
-                'post_id' => request()->post_id
+                'post_id' => request()->post_id,
+                'type' => PaymentTransaction::TYPE[1]
             ]);
 
             return response()->json(['success' => true]);
