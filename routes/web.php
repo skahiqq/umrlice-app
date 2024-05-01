@@ -38,5 +38,11 @@ Route::group([
         Route::get('delete', [CartController::class, 'destroy']);
         Route::get('empty-fields', [CartController::class, 'setNull']);
     });
+
+    Route::group([
+        'prefix' => 'payment'
+    ], function () {
+        Route::get('', []);
+    });
 });
 
