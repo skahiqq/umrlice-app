@@ -56,4 +56,21 @@ class PaymentController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function setPostId()
+    {
+        $transactionWithoutPost = PaymentTransaction::where('user_id', request()->user_id)
+            ->where('post_id', null)
+            ->first();
+
+        if ($transactionWithoutPost) {
+            $transactionWithoutPost->update([
+                'post_id' => request()->post_id
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'User has no transaction without a post'], 422);
+    }
 }
