@@ -90,7 +90,7 @@ class PaymentController extends Controller
                 'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/capture', [ // debit
-                'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
+                'merchantTransactionId' => 'capturee-' . $preAuthorizeTransaction->transaction_id,
                 'amount' => $preAuthorizeTransaction->price,
                 'currency' => 'EUR',
                 'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
