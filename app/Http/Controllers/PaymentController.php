@@ -67,8 +67,7 @@ class PaymentController extends Controller
 
         if ($transactionWithoutPost) {
             $transactionWithoutPost->update([
-                'post_id' => request()->post_id,
-                'type' => 1
+                'post_id' => request()->post_id
             ]);
 
             return response()->json(['success' => true]);
