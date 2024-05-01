@@ -45,6 +45,7 @@ class PaymentController extends Controller
 
             PaymentTransaction::create([
                 'user_id' => 1,
+                'price' => $cart->price,
                 'transaction_id' => $transactionId,
                 'data' => $jsonResponse,
                 'type' => request()->type ?? PaymentTransaction::TYPE[0]
