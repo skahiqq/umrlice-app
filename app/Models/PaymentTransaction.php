@@ -9,8 +9,14 @@ class PaymentTransaction extends Model
 {
     use HasFactory;
 
+    public const TYPE = [
+        'PREAUTHORIZE',
+        'CAPTURE'
+    ];
+
     protected $fillable = [
         'user_id',
+        'post_id',
         'transaction_id',
         'data'
     ];
