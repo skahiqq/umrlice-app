@@ -44,7 +44,7 @@ class PaymentController extends Controller
             $jsonResponse = $response->body();
 
             PaymentTransaction::create([
-                'user_id' => 1,
+                'user_id' => $cart->user_id,
                 'price' => $cart->price,
                 'transaction_id' => $transactionId,
                 'data' => $jsonResponse,
@@ -61,7 +61,7 @@ class PaymentController extends Controller
     public function setPostId()
     {
         $transactionWithoutPost = PaymentTransaction::where('user_id', request()->user_id)
-            ->where('post_id', null)
+            ->whereNull('post_id')
             ->first();
 
         if ($transactionWithoutPost) {
