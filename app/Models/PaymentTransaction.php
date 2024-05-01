@@ -18,6 +18,7 @@ class PaymentTransaction extends Model
         'user_id',
         'post_id',
         'price',
+        'type',
         'transaction_id',
         'data'
     ];
