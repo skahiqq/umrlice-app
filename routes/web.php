@@ -43,6 +43,7 @@ Route::group([
         'prefix' => 'payment'
     ], function () {
         Route::get('set-post', [PaymentController::class, 'setPostId']);
+        Route::get('capture', [PaymentController::class, 'capture']);
     });
 });
 
