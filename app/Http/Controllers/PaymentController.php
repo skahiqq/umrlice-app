@@ -83,6 +83,7 @@ class PaymentController extends Controller
             'post_id' => request()->post_id
         ])->first();
 
+        return json_decode($preAuthorizeTransaction->data, TRUE)['uuid'];
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
