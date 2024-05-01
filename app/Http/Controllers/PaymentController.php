@@ -32,7 +32,7 @@ class PaymentController extends Controller
                 'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/preauthorize', [ // debit
-                'merchantTransactionId' => '20-2-2-2',
+                'merchantTransactionId' => $transactionId,
                 'amount' => $cart->price,
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
@@ -48,7 +48,7 @@ class PaymentController extends Controller
                 'price' => $cart->price,
                 'transaction_id' => $transactionId,
                 'data' => $jsonResponse,
-                'type' => request()->type ?? PaymentTransaction::TYPE[0]
+                'type' => request()->type ?? 0
             ]);
 
             return $jsonResponse;
@@ -68,7 +68,7 @@ class PaymentController extends Controller
         if ($transactionWithoutPost) {
             $transactionWithoutPost->update([
                 'post_id' => request()->post_id,
-                'type' => PaymentTransaction::TYPE[1]
+                'type' => 1
             ]);
 
             return response()->json(['success' => true]);
