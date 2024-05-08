@@ -11,7 +11,8 @@ class PaymentTransaction extends Model
 
     public const TYPE = [
         'PREAUTHORIZE',
-        'CAPTURE'
+        'CAPTURE',
+        'VOID'
     ];
 
     protected $fillable = [

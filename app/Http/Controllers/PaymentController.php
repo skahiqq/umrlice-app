@@ -112,4 +112,43 @@ class PaymentController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
+    /**
+     * Is going to cancel a previous preauthorize payment
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function void()
+    {
+        $preAuthorizeTransaction = PaymentTransaction::where([
+            'user_id' => request()->user_id,
+            'post_id' => request()->post_id
+        ])->first();
+
+        try {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
+                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
+            ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/void', [
+                'merchantTransactionId' => 'void-' . $preAuthorizeTransaction->transaction_id,
+                'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
+            ]);
+
+            $jsonResponse = $response->body();
+
+            PaymentTransaction::create([
+                'user_id' => $preAuthorizeTransaction->user_id,
+                'price' => $preAuthorizeTransaction->price,
+                'transaction_id' => $preAuthorizeTransaction->transaction_id,
+                'data' => $jsonResponse,
+                'type' => 2
+            ]);
+
+            return $jsonResponse;
+        } catch (\Exception $e) {
+            Log::info(json_encode($e->getMessage()));
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
 }

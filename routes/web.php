@@ -44,6 +44,7 @@ Route::group([
     ], function () {
         Route::get('set-post', [PaymentController::class, 'setPostId']);
         Route::get('capture', [PaymentController::class, 'capture']);
+        Route::get('void', [PaymentController::class, 'void']);
     });
 });
 
