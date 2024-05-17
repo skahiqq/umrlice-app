@@ -39,7 +39,7 @@ class PaymentController extends Controller
                 'successUrl' => 'https://umrlice.vercel.app/payment-success',
                 'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
                 'errorUrl' => 'https://umrlice.vercel.app/payment-error',
-                'callbackUrl' => 'https://www.umrlice-api.com/api/e6dfcdd0d0e693508e7f14ad1841cfe8/payment/callback'
+                'callbackUrl' => '/api/e6dfcdd0d0e693508e7f14ad1841cfe8/payment/callback'
             ]);
 
             $jsonResponse = $response->body();
