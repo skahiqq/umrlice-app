@@ -45,6 +45,7 @@ Route::group([
         Route::get('set-post', [PaymentController::class, 'setPostId']);
         Route::get('capture', [PaymentController::class, 'capture']);
         Route::get('void', [PaymentController::class, 'void']);
+        Route::get('callback', [PaymentController::class, 'callBack']);
     });
 });
 

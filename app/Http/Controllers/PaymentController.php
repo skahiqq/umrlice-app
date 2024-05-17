@@ -38,7 +38,8 @@ class PaymentController extends Controller
                 'transactionToken' => request()->token,
                 'successUrl' => 'https://umrlice.vercel.app/payment-success',
                 'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
-                'errorUrl' => 'https://umrlice.vercel.app/payment-error'
+                'errorUrl' => 'https://umrlice.vercel.app/payment-error',
+                'callbackUrl' => 'https://www.umrlice-api.com/api/e6dfcdd0d0e693508e7f14ad1841cfe8/payment/callback'
             ]);
 
             $jsonResponse = $response->body();
@@ -150,5 +151,10 @@ class PaymentController extends Controller
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    public function callBack()
+    {
+        Log::info(json_encode(\request()->all));
     }
 }
