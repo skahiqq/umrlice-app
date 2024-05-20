@@ -186,7 +186,7 @@ class PaymentController extends Controller
             $responseBody = $response->body();
             PaymentTransaction::create([
                 'user_id' => $request->user_id,
-                'transaction_id' => PaymentTransaction::TYPE[3] . '' . $transactionId,
+                'transaction_id' => PaymentTransaction::TYPE[3] . '_' . $transactionId,
                 'data' => $responseBody,
                 'type' => 3
             ]);
