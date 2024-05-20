@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -157,7 +158,7 @@ class PaymentController extends Controller
     {
         Log::info(json_encode(\request()->all));
 
-        return response()->json();
+        return response()->json()->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);;
     }
 
     public function getLastPayment(Request $request)
