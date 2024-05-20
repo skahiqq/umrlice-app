@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Models\PaymentTransaction;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
+    $lastTransactionDetails = PaymentTransaction::where('user_id', 94)->orderBy('created_at', 'DESC')->first();
+
+    return $lastTransactionDetails->data;
     try {
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
