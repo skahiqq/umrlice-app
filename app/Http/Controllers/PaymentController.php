@@ -184,14 +184,18 @@ class PaymentController extends Controller
             $transactionId = $year . '-' . $month . '-' . $day . '-' . ($lastTransaction ? $lastTransaction->id + 1 : 1);
 
             $responseBody = $response->body();
-            PaymentTransaction::create([
+
+            $transaction = PaymentTransaction::create([
                 'user_id' => $request->user_id,
                 'transaction_id' => PaymentTransaction::TYPE[3] . '_' . $transactionId,
                 'data' => $responseBody,
                 'type' => 3
             ]);
 
-            return $responseBody;
+            return response()->json([
+                'payment' => $responseBody,
+                'timestamp' => $lastTransaction->created_at
+            ]);
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
