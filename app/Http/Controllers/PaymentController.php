@@ -195,7 +195,7 @@ class PaymentController extends Controller
 
             $responseBody = json_decode($responseBody, TRUE);
 
-            $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('YY d m h s')]);
+            $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('Y-m-d h:i:s')]);
 
             return json_encode($concatResponseBody);
 
