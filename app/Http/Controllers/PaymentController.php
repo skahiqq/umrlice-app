@@ -192,10 +192,12 @@ class PaymentController extends Controller
                 'type' => 3
             ]);
 
-            return response()->json([
-                'payment' => $responseBody,
-                'timestamp' => $lastTransaction->created_at
-            ]);
+            $responseBody = json_decode($responseBody, TRUE);
+
+            $concatResponseBody = array_merge($responseBody, ['timestamp' => $lastTransaction->created_at]);
+
+            return json_encode($concatResponseBody);
+
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
