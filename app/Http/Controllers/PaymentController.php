@@ -156,7 +156,7 @@ class PaymentController extends Controller
 
     public function callBackPreAuthorize()
     {
-        Log::info(json_encode(request()));
+        Log::info(json_encode(\request()->all));
 
         return response('OK', 200);
     }
