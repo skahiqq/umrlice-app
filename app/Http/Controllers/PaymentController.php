@@ -171,7 +171,7 @@ class PaymentController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-            ])->get('https://asxgw.paymentsandbox.cloud/api/v3//status/press-simulator/getByUuid/' . $lastTransactionDetails['uuid']);
+            ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
             return $response->body();
         } catch (\Exception $e) {
