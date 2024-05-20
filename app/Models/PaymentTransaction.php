@@ -23,8 +23,4 @@ class PaymentTransaction extends Model
         'transaction_id',
         'data'
     ];
-
-    protected $casts = [
-        'data' => 'json'
-    ];
 }
