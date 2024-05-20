@@ -173,7 +173,25 @@ class PaymentController extends Controller
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
-            return $response->body();
+            $lastTransaction = PaymentTransaction::orderBy('id', 'DESC')->first();
+
+            $date = \Carbon\Carbon::now();
+            $year = $date->year;
+            $month = $date->month;
+            $month = $month < 10 ? '0' . $month : $month;
+            $day = $date->day;
+            $day = $day < 10 ? '0' . $day : $day;
+            $transactionId = $year . '-' . $month . '-' . $day . '-' . ($lastTransaction ? $lastTransaction->id + 1 : 1);
+
+            $responseBody = $response->body();
+            PaymentTransaction::create([
+                'user_id' => $request->user_id,
+                'transaction_id' => PaymentTransaction::TYPE[3] . '' . $transactionId,
+                'data' => $responseBody,
+                'type' => 3
+            ]);
+
+            return $responseBody;
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
