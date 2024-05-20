@@ -39,7 +39,7 @@ class PaymentController extends Controller
                 'successUrl' => 'https://umrlice.vercel.app/payment-success',
                 'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
                 'errorUrl' => 'https://umrlice.vercel.app/payment-error',
-                'callbackUrl' => 'https://umrlice.vercel.app/payment-success'
+                'callbackUrl' => 'https://umrlice-api.com/api/callback'
             ]);
 
             $jsonResponse = $response->body();
@@ -156,6 +156,8 @@ class PaymentController extends Controller
     public function callBackPreAuthorize()
     {
         Log::info(json_encode(\request()->all));
+
+        return response()->json(['message' => 'Success'], 200);
     }
 
     public function getLastPayment(Request $request)
