@@ -157,7 +157,7 @@ class PaymentController extends Controller
     {
         Log::info(json_encode(\request()->all));
 
-        return response()->json([], 200);
+        return response()->json();
     }
 
     public function getLastPayment(Request $request)
