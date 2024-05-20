@@ -163,6 +163,20 @@ class PaymentController extends Controller
 
     public function getLastPayment(Request $request)
     {
-        return response()->json(PaymentTransaction::where('user_id', $request->user_id)->orderBy('created_at', 'DESC')->first());
+        $lastTransactionDetails = PaymentTransaction::where('user_id', $request->user_id)->orderBy('created_at', 'DESC')->first();
+
+        try {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
+                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
+            ])->get('https://asxgw.paymentsandbox.cloud/api/v3//status/press-simulator/getByUuid/' . $lastTransactionDetails['uuid']);
+
+            return $response->body();
+        } catch (\Exception $e) {
+            Log::info(json_encode($e->getMessage()));
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }
