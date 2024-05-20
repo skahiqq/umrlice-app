@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\PaymentTransaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -194,7 +195,7 @@ class PaymentController extends Controller
 
             $responseBody = json_decode($responseBody, TRUE);
 
-            $concatResponseBody = array_merge($responseBody, ['timestamp' => $lastTransaction->created_at]);
+            $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('M d Y')]);
 
             return json_encode($concatResponseBody);
 
