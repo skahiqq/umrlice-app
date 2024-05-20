@@ -49,5 +49,5 @@ Route::group([
     });
 });
 
-Route::post('api/callback', [PaymentController::class, 'callBackPreAuthorize']);
+Route::get('api/callback', [PaymentController::class, 'callBackPreAuthorize']);
 
