@@ -158,7 +158,7 @@ class PaymentController extends Controller
     {
         Log::info(json_encode(\request()->all));
 
-        return response()->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);;
+        return response()->json([])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);;
     }
 
     public function getLastPayment(Request $request)
