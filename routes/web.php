@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +22,19 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
+    try {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
+            'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
+        ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByMerchantTransactionId/2024-05-20-70');
+
+        return $response->body();
+    } catch (\Exception $e) {
+        Log::info(json_encode($e->getMessage()));
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
     return response()->json(['success' => true]);
 });
 
