@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
     $lastTransactionDetails = PaymentTransaction::where('user_id', 94)->orderBy('created_at', 'DESC')->first();
 
-    return json_decode($lastTransactionDetails->data)['uuid'];
+    return json_decode($lastTransactionDetails->data, TRUE)['uuid'];
     try {
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
