@@ -14,7 +14,7 @@ class AddSentToPaymentTransactions extends Migration
     public function up()
     {
         Schema::table('payment_transactions', function (Blueprint $table) {
-            $table->boolean('sent')->default(1);
+            $table->boolean('sent')->default(0);
         });
     }
 
