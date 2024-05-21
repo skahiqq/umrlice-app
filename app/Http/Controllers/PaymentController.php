@@ -198,7 +198,8 @@ class PaymentController extends Controller
 
             $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('Y-m-d h:i:s')]);
 
-            new PaymentMail($concatResponseBody);
+            \Illuminate\Support\Facades\Mail::to($concatResponseBody['customer']['email'])
+                ->send(new \App\Mail\PaymentMail($concatResponseBody));
 
             return json_encode($concatResponseBody);
         } catch (\Exception $e) {
