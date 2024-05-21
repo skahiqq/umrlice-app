@@ -175,7 +175,7 @@ class PaymentController extends Controller
                 'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
             ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
-            $lastTransaction = PaymentTransaction::orderBy('id', 'DESC')->first();
+            $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
 
             $date = \Carbon\Carbon::now();
             $year = $date->year;
