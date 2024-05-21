@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentMail;
 use App\Models\Cart;
 use App\Models\PaymentTransaction;
 use Carbon\Carbon;
@@ -197,8 +198,9 @@ class PaymentController extends Controller
 
             $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('Y-m-d h:i:s')]);
 
-            return json_encode($concatResponseBody);
+            new PaymentMail($concatResponseBody);
 
+            return json_encode($concatResponseBody);
         } catch (\Exception $e) {
             Log::info(json_encode($e->getMessage()));
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
