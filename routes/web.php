@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $response = Http::withHeaders([
+    /*$response = Http::withHeaders([
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
         'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
@@ -31,7 +31,8 @@ Route::get('/test', function () {
     ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/a2f95d3a4f9f574f172c');
 
 
-    dd($response->body());
+    dd($response->body());*/
+    \Illuminate\Support\Facades\Mail::to('haxhiuuardian@gmail.com')->send(new \App\Mail\TestMail());
     return response()->json(['success' => true]);
 });
 
