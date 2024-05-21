@@ -31,6 +31,6 @@ class PaymentMail extends Mailable
     {
         return $this->view('mails.payment', [
             'data' => $this->array
-        ])->subject(__('Payment Post Success') . ' ' . $this->array['uuid']);
+        ])->subject(__('Payment') . ' ' . $this->array['purchaseId'] . ' ' . __('success'));
     }
 }
