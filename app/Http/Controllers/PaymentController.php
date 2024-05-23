@@ -49,6 +49,7 @@ class PaymentController extends Controller
 
             PaymentTransaction::create([
                 'user_id' => $cart->user_id,
+                'post_id' => json_decode($cart->data, TRUE)['id'],
                 'price' => $cart->price,
                 'transaction_id' => $transactionId,
                 'data' => $jsonResponse,
