@@ -190,6 +190,8 @@ class PaymentController extends Controller
 
             $transaction = PaymentTransaction::create([
                 'user_id' => $request->user_id,
+                'post_id' => $lastTransaction->post_id,
+                'price' => $lastTransaction->price,
                 'transaction_id' => PaymentTransaction::TYPE[3] . '_' . $transactionId,
                 'data' => $responseBody,
                 'type' => 3
