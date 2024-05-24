@@ -198,9 +198,9 @@ class PaymentController extends Controller
                 'user_id' => $request->user_id,
                 'post_id' => $lastTransaction->post_id,
                 'price' => $lastTransaction->price,
-                'transaction_id' => (isset($concatResponseBody['errors']) ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
+                'transaction_id' => (isset($responseBody['errors']) ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
                 'data' => $responseBody,
-                'type' => isset($concatResponseBody['errors']) ? 4 : 3
+                'type' => isset($responseBody['errors']) ? 4 : 3
             ]);
 
             if (!$lastTransaction->sent) {
