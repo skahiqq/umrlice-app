@@ -194,6 +194,8 @@ class PaymentController extends Controller
 
             Log::info('email ' . $concatResponseBody['customer']['email']);
 
+            Log::info('test ' . json_encode($responseBody));
+
             $transaction = PaymentTransaction::create([
                 'user_id' => $request->user_id,
                 'post_id' => $lastTransaction->post_id,
