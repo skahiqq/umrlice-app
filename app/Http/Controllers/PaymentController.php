@@ -198,9 +198,9 @@ class PaymentController extends Controller
                 'user_id' => $request->user_id,
                 'post_id' => $lastTransaction->post_id,
                 'price' => $lastTransaction->price,
-                'transaction_id' => (json_decode($response->body(), TRUE)['transactionStatus'] == 'ERROR' ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
+                'transaction_id' => ($concatResponseBody->transactionStatus == 'ERROR' ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
                 'data' => $responseBody,
-                'type' => json_decode($response->body(), TRUE)['transactionStatus'] == 'ERROR' ? 4 : 3
+                'type' => $concatResponseBody->transactionStatus == 'ERROR' ? 4 : 3
             ]);
 
             if (!$lastTransaction->sent) {
