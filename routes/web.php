@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PostController;
 use App\Models\PaymentTransaction;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -61,6 +62,12 @@ Route::group([
         Route::get('capture', [PaymentController::class, 'capture']);
         Route::get('void', [PaymentController::class, 'void']);
         Route::get('last', [PaymentController::class, 'getLastPayment']);
+    });
+
+    Route::group([
+        'prefix' => 'post'
+    ], function () {
+        Route::get('is-paid', [PostController::class, 'isPaid']);
     });
 });
 
