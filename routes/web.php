@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    /*$response = Http::withHeaders([
+    $response = Http::withHeaders([
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
         'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
@@ -31,7 +31,7 @@ Route::get('/test', function () {
     ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/a2f95d3a4f9f574f172c');
 
 
-    dd($response->body());*/
+    dd(json_decode($response->body(), TRUE));
     $array = array('timestamp' => 'test', 'transactionStatus' => 'SUCCESS', 'success' => true, 'uuid' => '32ea009286d8f8325601', 'merchantTransactionId' => '2024-05-20-110', 'purchaseId' => '20240520-32ea009286d8f8325601', 'transactionType' => 'PREAUTHORIZE', 'paymentMethod' => 'Creditcard', 'amount' => '7.00', 'currency' => 'EUR', 'customer' => array('email' => 'bejujanuve@mailinator.com', 'emailVerified' => false, 'ipAddress' => '46.99.4.82'), 'returnData' => array('_TYPE' => 'cardData', 'type' => 'mastercard', 'cardHolder' => 'Quis quia enim persp', 'expiryMonth' => '02', 'expiryYear' => '2029', 'binDigits' => '55555555', 'firstSixDigits' => '555555', 'lastFourDigits' => '4444', 'fingerprint' => 'HYgagD7WfreyIbZMJFxVIcQP/KoD/qCJc+27KpCTCJdQ6AwDqvmfoIW1o9vQBCTmb47Q0NriG51BmKm1Fe1SSQ', 'threeDSecure' => 'MANDATORY', 'eci' => '02', 'binBrand' => 'MASTERCARD', 'binBank' => 'CIAGROUP', 'binType' => 'DEBIT', 'binLevel' => 'PREPAID', 'binCountry' => 'BR'));
     \Illuminate\Support\Facades\Mail::to('haxhiuuardian@gmail.com')
         ->send(new \App\Mail\PaymentMail($array));
