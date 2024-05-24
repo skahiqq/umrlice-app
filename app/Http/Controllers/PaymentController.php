@@ -83,39 +83,57 @@ class PaymentController extends Controller
 
     public function capture()
     {
-        $preAuthorizeTransaction = PaymentTransaction::where([
+        $isPaid = PaymentTransaction::where([
             'user_id' => request()->user_id,
-            'post_id' => request()->post_id
-        ])->first();
+            'post_id' => request()->post_id,
+            'type' => 3
+        ]);
 
-        try {
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
-                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-            ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/capture', [ // debit
-                'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
-                'amount' => $preAuthorizeTransaction->price,
-                'currency' => 'EUR',
-                'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
-            ]);
+        $failed = PaymentTransaction::where([
+            'user_id' => request()->user_id,
+            'post_id' => request()->post_id,
+            'type' => 4
+        ]);
 
-            $jsonResponse = $response->body();
+       if ($isPaid) {
+           $preAuthorizeTransaction = PaymentTransaction::where([
+               'user_id' => request()->user_id,
+               'post_id' => request()->post_id
+           ])->first();
 
-            PaymentTransaction::create([
-                'user_id' => $preAuthorizeTransaction->user_id,
-                'price' => $preAuthorizeTransaction->price,
-                'transaction_id' => $preAuthorizeTransaction->transaction_id,
-                'data' => $jsonResponse,
-                'type' => 1
-            ]);
+           try {
+               $response = Http::withHeaders([
+                   'Content-Type' => 'application/json',
+                   'Accept' => 'application/json',
+                   'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
+                   'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
+               ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/capture', [ // debit
+                   'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
+                   'amount' => $preAuthorizeTransaction->price,
+                   'currency' => 'EUR',
+                   'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
+               ]);
 
-            return $jsonResponse;
-        } catch (\Exception $e) {
-            Log::info(json_encode($e->getMessage()));
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
-        }
+               $jsonResponse = $response->body();
+
+               PaymentTransaction::create([
+                   'user_id' => $preAuthorizeTransaction->user_id,
+                   'price' => $preAuthorizeTransaction->price,
+                   'transaction_id' => $preAuthorizeTransaction->transaction_id,
+                   'data' => $jsonResponse,
+                   'type' => 1
+               ]);
+
+               return $jsonResponse;
+           } catch (\Exception $e) {
+               Log::info(json_encode($e->getMessage()));
+               return response()->json(['success' => false, 'message' => $e->getMessage()]);
+           }
+       }
+
+       if ($failed) {
+           return response()->json(['success' => false, 'message' => 'failed']);
+       }
     }
 
     /**
