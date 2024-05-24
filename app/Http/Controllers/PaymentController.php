@@ -188,20 +188,20 @@ class PaymentController extends Controller
 
             $responseBody = $response->body();
 
+            $oldBody = $responseBody;
+
             $responseBody = json_decode($responseBody, TRUE);
 
             $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('Y-m-d h:i:s')]);
 
             Log::info('email ' . $concatResponseBody['customer']['email']);
 
-            Log::info('test ' . json_encode($responseBody));
-
             $transaction = PaymentTransaction::create([
                 'user_id' => $request->user_id,
                 'post_id' => $lastTransaction->post_id,
                 'price' => $lastTransaction->price,
                 'transaction_id' => (isset($responseBody['errors']) ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
-                'data' => $responseBody,
+                'data' => $oldBody,
                 'type' => isset($responseBody['errors']) ? 4 : 3
             ]);
 
