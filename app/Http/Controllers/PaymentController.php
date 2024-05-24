@@ -87,13 +87,13 @@ class PaymentController extends Controller
             'user_id' => request()->user_id,
             'post_id' => request()->post_id,
             'type' => 3
-        ]);
+        ])->first();
 
         $failed = PaymentTransaction::where([
             'user_id' => request()->user_id,
             'post_id' => request()->post_id,
             'type' => 4
-        ]);
+        ])->first();
 
        if ($isPaid) {
            $preAuthorizeTransaction = PaymentTransaction::where([
