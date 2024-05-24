@@ -13,7 +13,8 @@ class PaymentTransaction extends Model
         'PREAUTHORIZE',
         'CAPTURE',
         'VOID',
-        'PAYMENT_PREAUTHORIZE_SUCCESS'
+        'PAYMENT_PREAUTHORIZE_SUCCESS',
+        'PAYMENT_PREAUTHORIZE_ERROR',
     ];
 
     protected $fillable = [

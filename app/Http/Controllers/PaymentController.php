@@ -188,21 +188,20 @@ class PaymentController extends Controller
 
             $responseBody = $response->body();
 
-            $transaction = PaymentTransaction::create([
-                'user_id' => $request->user_id,
-                'post_id' => $lastTransaction->post_id,
-                'price' => $lastTransaction->price,
-                'transaction_id' => PaymentTransaction::TYPE[3] . '_' . $transactionId,
-                'data' => $responseBody,
-                'type' => 3
-            ]);
-
             $responseBody = json_decode($responseBody, TRUE);
 
             $concatResponseBody = array_merge($responseBody, ['timestamp' => Carbon::parse($lastTransaction->created_at)->format('Y-m-d h:i:s')]);
 
             Log::info('email ' . $concatResponseBody['customer']['email']);
 
+            $transaction = PaymentTransaction::create([
+                'user_id' => $request->user_id,
+                'post_id' => $lastTransaction->post_id,
+                'price' => $lastTransaction->price,
+                'transaction_id' => ($concatResponseBody['transactionStatus'] == 'ERROR' ? PaymentTransaction::TYPE[4] : PaymentTransaction::TYPE[3]) . '_' . $transactionId,
+                'data' => $responseBody,
+                'type' => $concatResponseBody['transactionStatus'] == 'ERROR' ? 4 : 3
+            ]);
 
             if (!$lastTransaction->sent) {
                 \Illuminate\Support\Facades\Mail::to($concatResponseBody['customer']['email'])
