@@ -134,6 +134,8 @@ class PaymentController extends Controller
        if ($failed) {
            return response()->json(['success' => false, 'message' => 'failed']);
        }
+
+       return response()->json(['success' => false, 'message' => 'yet']);
     }
 
     /**
