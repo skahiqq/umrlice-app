@@ -111,15 +111,15 @@ class PaymentController extends Controller
                    'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
                    'amount' => $preAuthorizeTransaction->price,
                    'currency' => 'EUR',
-                   'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
+                   'referenceUuid' => json_decode($isPaid->data, TRUE)['uuid']
                ]);
 
                $jsonResponse = $response->body();
 
                PaymentTransaction::create([
-                   'user_id' => $preAuthorizeTransaction->user_id,
-                   'price' => $preAuthorizeTransaction->price,
-                   'transaction_id' => $preAuthorizeTransaction->transaction_id,
+                   'user_id' => $isPaid->user_id,
+                   'price' => $isPaid->price,
+                   'transaction_id' => $isPaid->transaction_id,
                    'data' => $jsonResponse,
                    'type' => 1
                ]);
