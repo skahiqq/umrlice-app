@@ -232,7 +232,10 @@ class PaymentController extends Controller
                 }
 
                 $lastTransaction->sent = 1;
+                $transaction->sent = 1;
+
                 $lastTransaction->save();
+                $transaction->save();
             }
 
             return json_encode($concatResponseBody);
