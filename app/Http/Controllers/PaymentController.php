@@ -198,6 +198,10 @@ class PaymentController extends Controller
 
             $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
 
+            if ($lastTransaction->type === 4) {
+                return response()->json(['success' => false]);
+            }
+
             $date = \Carbon\Carbon::now();
             $year = $date->year;
             $month = $date->month;
