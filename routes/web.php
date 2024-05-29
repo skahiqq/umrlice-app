@@ -31,10 +31,11 @@ Route::get('/test', function () {
         'X-Parse-Master-Key: TpO0j3lG2PmEVMXlKYQACoOXKQrL3lwM0HwR9dbH' // This is the fake app's readonly master key
     ));
     $data = json_decode(curl_exec($curl)); // Here you have the data that you need
+
+    dd($data);
     print_r(json_encode($data, JSON_PRETTY_PRINT));
     curl_close($curl);
 
-    dd($data);
     $response = Http::withHeaders([
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
