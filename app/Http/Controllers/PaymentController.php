@@ -199,7 +199,7 @@ class PaymentController extends Controller
             $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
             $isErrorLastTransaction = PaymentTransaction::where('type', 4)->orderBy('created_at', 'DESC')->first();
 
-            if ($isErrorLastTransaction && $isErrorLastTransaction->sent) {
+            if ($lastTransaction->sent && $isErrorLastTransaction && $isErrorLastTransaction->sent) {
                 return response()->json(['success' => false]);
             }
 
