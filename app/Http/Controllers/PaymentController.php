@@ -229,7 +229,7 @@ class PaymentController extends Controller
                 if (!isset($responseBody['errors'])) {
                     \Illuminate\Support\Facades\Mail::to($concatResponseBody['customer']['email'])
                         ->send(new \App\Mail\PaymentMail($concatResponseBody));
-
+                } else {
                     $transaction->sent = 1;
                     $transaction->save();
                 }
