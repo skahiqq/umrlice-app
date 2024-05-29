@@ -44,7 +44,10 @@ class PaymentController extends Controller
                 'errorUrl' => 'https://umrlice.vercel.app/payment-error',
                 'callbackUrl' => 'https://umrlice-api.com/callback',
                 'customer' => [
-                    'billingAddress1' => 'test'
+                    'billingAddress1' => request()->billingAddress1,
+                    'billingCity' => request()->billingCity,
+                    'billingPostcode' => request()->billingPostcode,
+                    'billingCountry' => request()->billingCountry
                 ]
             ]);
 
