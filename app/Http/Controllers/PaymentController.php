@@ -197,8 +197,9 @@ class PaymentController extends Controller
             ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
             $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
+            $isErrorLastTransaction = PaymentTransaction::where('type', 4)->orderBy('created_at', 'DESC')->first();
 
-            if ($lastTransaction->type === 4) {
+            if ($isErrorLastTransaction && $isErrorLastTransaction->sent) {
                 return response()->json(['success' => false]);
             }
 
