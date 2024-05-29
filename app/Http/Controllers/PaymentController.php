@@ -226,8 +226,11 @@ class PaymentController extends Controller
             ]);
 
             if (!$lastTransaction->sent) {
-                \Illuminate\Support\Facades\Mail::to($concatResponseBody['customer']['email'])
-                    ->send(new \App\Mail\PaymentMail($concatResponseBody));
+                if (!isset($responseBody['errors'])) {
+                    \Illuminate\Support\Facades\Mail::to($concatResponseBody['customer']['email'])
+                        ->send(new \App\Mail\PaymentMail($concatResponseBody));
+                }
+
                 $lastTransaction->sent = 1;
                 $lastTransaction->save();
             }
