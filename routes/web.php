@@ -32,7 +32,7 @@ Route::get('/test', function () {
     ));
     $data = json_decode(curl_exec($curl)); // Here you have the data that you need
 
-    dd($data);
+    print_r($data);
     print_r(json_encode($data, JSON_PRETTY_PRINT));
     curl_close($curl);
 
