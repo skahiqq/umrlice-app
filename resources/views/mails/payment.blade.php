@@ -10,5 +10,5 @@
     <br />
     <span>Bank Code: <b>XXXXXX</b></span>
     <br />
-    <span>Timestamp: <b>{{ $data['timestamp'] }}</b></span>
+    <span>Timestamp: <b>{{ $data['timestamp'] }} UTC</b></span>
 </div>
