@@ -8,7 +8,7 @@
     <br />
     <span>Card Type: <b>{{ $data['returnData']['binBrand'] . ' ****' . $data['returnData']['lastFourDigits'] }}</b></span>
     <br />
-    <span>Bank Code: <b>XXXXXX</b></span>
+    <span>Bank Code: <b>{{ $data['extradata']['authCode'] ?? "" }}</b></span>
     <br />
     <span>Timestamp: <b>{{ $data['timestamp'] }} UTC</b></span>
 </div>
