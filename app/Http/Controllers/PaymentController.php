@@ -39,9 +39,9 @@ class PaymentController extends Controller
                 'amount' => $cart->price,
                 'currency' => 'EUR',
                 'transactionToken' => request()->token,
-                'successUrl' => 'https://umrlice.vercel.app/payment-success',
-                'cancelUrl' => 'https://umrlice.vercel.app/payment-error',
-                'errorUrl' => 'https://umrlice.vercel.app/payment-error',
+                'successUrl' => 'https://umrlice.vijesti.me/payment-success',
+                'cancelUrl' => 'https://umrlice.vijesti.me/payment-error',
+                'errorUrl' => 'https://umrlice.vijesti.me/payment-error',
                 'callbackUrl' => 'https://umrlice-api.com/callback',
                 'customer' => [
                     'billingAddress1' => request()->billingAddress1,
