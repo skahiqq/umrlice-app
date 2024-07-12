@@ -34,7 +34,7 @@ class PaymentController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
                 'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
-            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/preauthorize', [ // debit
+            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/'.env('PAYMENT_API_KEY').'/preauthorize', [ // debit
                 'merchantTransactionId' => $transactionId,
                 'amount' => $cart->price,
                 'currency' => 'EUR',
@@ -113,7 +113,7 @@ class PaymentController extends Controller
                    'Accept' => 'application/json',
                    'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
                    'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
-               ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/capture', [ // debit
+               ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/'.env('PAYMENT_API_KEY').'/capture', [ // debit
                    'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
                    'amount' => $preAuthorizeTransaction->price,
                    'currency' => 'EUR',
@@ -161,7 +161,7 @@ class PaymentController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
                 'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
-            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/void', [
+            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/'.env('PAYMENT_API_KEY').'/void', [
                 'merchantTransactionId' => 'void-' . $preAuthorizeTransaction->transaction_id,
                 'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
             ]);
@@ -200,7 +200,7 @@ class PaymentController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
                 'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
-            ])->get(env('PAYMENT_BASE_URL') . 'api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
+            ])->get(env('PAYMENT_BASE_URL') . 'api/v3/status/'.env('PAYMENT_API_KEY').'/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
             $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
             $isErrorLastTransaction = PaymentTransaction::where('type', 4)->orderBy('created_at', 'DESC')->first();
