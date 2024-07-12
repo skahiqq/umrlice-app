@@ -32,9 +32,9 @@ class PaymentController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
-                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-            ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/preauthorize', [ // debit
+                'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
+                'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
+            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/preauthorize', [ // debit
                 'merchantTransactionId' => $transactionId,
                 'amount' => $cart->price,
                 'currency' => 'EUR',
@@ -111,9 +111,9 @@ class PaymentController extends Controller
                $response = Http::withHeaders([
                    'Content-Type' => 'application/json',
                    'Accept' => 'application/json',
-                   'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
-                   'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-               ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/capture', [ // debit
+                   'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
+                   'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
+               ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/capture', [ // debit
                    'merchantTransactionId' => 'capture-' . $preAuthorizeTransaction->transaction_id,
                    'amount' => $preAuthorizeTransaction->price,
                    'currency' => 'EUR',
@@ -159,9 +159,9 @@ class PaymentController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
-                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-            ])->post('https://asxgw.paymentsandbox.cloud/api/v3/transaction/press-simulator/void', [
+                'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
+                'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
+            ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/press-simulator/void', [
                 'merchantTransactionId' => 'void-' . $preAuthorizeTransaction->transaction_id,
                 'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
             ]);
@@ -198,9 +198,9 @@ class PaymentController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode('press-api:G4P4bs)4+I_V2nHKdCv3u+?YiVe1G'),
-                'X-Signature' => 'OQxsFuuj4ifcLFaPAPyuO6TtaC65Yb'
-            ])->get('https://asxgw.paymentsandbox.cloud/api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
+                'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
+                'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
+            ])->get(env('PAYMENT_BASE_URL') . 'api/v3/status/press-simulator/getByUuid/' . json_decode($lastTransactionDetails->data, TRUE)['uuid']);
 
             $lastTransaction = PaymentTransaction::where('type', 0)->orderBy('id', 'DESC')->first();
             $isErrorLastTransaction = PaymentTransaction::where('type', 4)->orderBy('created_at', 'DESC')->first();
