@@ -24,7 +24,11 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return response()->json("test");
+    \App\Models\Wallet::create([
+        'amount' => 0
+    ]);
+
+    return \App\Models\Wallet::all();
 });
 
 Route::group([
