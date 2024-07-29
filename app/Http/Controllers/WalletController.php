@@ -39,7 +39,7 @@ class WalletController extends Controller
     public function addSpent(Request $request)
     {
         Spent::create([
-            'amount' => $request->amount,
+            'price' => $request->amount,
             'description' => $request->description
         ]);
 
