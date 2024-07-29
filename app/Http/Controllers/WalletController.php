@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Spent;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WalletController extends Controller
 {
@@ -30,7 +31,9 @@ class WalletController extends Controller
 
         $wallet->save();
 
-        return response()->json(Wallet::first());
+        Log::info("amount added");
+
+        return response()->json(['message' => 'Success']);
     }
 
     public function addSpent(Request $request)
@@ -39,5 +42,9 @@ class WalletController extends Controller
             'amount' => $request->amount,
             'description' => $request->description
         ]);
+
+        Log::info("spent added");
+
+        return response()->json(['message' => 'Success']);
     }
 }
