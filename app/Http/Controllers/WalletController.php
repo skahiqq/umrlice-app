@@ -23,17 +23,15 @@ class WalletController extends Controller
     {
         $wallet = Wallet::first();
 
-        if ($request->isAdding === true) {
-            $wallet->amount += $request->amount;
-        } else {
-            $wallet->amount -= $request->amount;
-        }
+        Log::info(json_encode([$request->amount]));
 
-        $wallet->save();
+        Wallet::where('id', 1)->update([
+            'amount' => $request->isAdding == true ? $wallet->amount + $request->amount : $wallet->amount - $request->amount
+        ]);
 
         Log::info("amount added");
 
-        return response()->json(['message' => 'Success']);
+        return response()->json(['message' => 'Success added money']);
     }
 
     public function addSpent(Request $request)
