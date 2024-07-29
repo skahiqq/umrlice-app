@@ -36,6 +36,8 @@ Route::group([
 ], function () {
     Route::get('', [\App\Http\Controllers\WalletController::class, 'getWallet']);
     Route::get('spents', [\App\Http\Controllers\WalletController::class, 'getSpents']);
+    Route::post('spents', [\App\Http\Controllers\WalletController::class, 'addSpent']);
+    Route::post('', [\App\Http\Controllers\WalletController::class, 'addOrWithdrawAmount']);
 });
 
 Route::group([
