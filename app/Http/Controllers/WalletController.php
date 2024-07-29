@@ -26,7 +26,7 @@ class WalletController extends Controller
         Log::info(json_encode([$request->amount]));
 
         Wallet::where('id', 1)->update([
-            'amount' => 100//$request->isAdding == true ? $wallet->amount + $request->amount : $wallet->amount - $request->amount
+            'amount' => (int) $request->isAdding == true ? $wallet->amount + $request->amount : $wallet->amount - $request->amount
         ]);
 
         Log::info("amount added");
