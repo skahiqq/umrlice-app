@@ -38,12 +38,12 @@ class WalletController extends Controller
 
     public function addSpent(Request $request)
     {
+        Log::info(json_encode($request->all()));
+
         Spent::create([
             'price' => $request->amount,
             'description' => $request->description
         ]);
-
-        Log::info("spent added");
 
         return response()->json(['message' => 'Success']);
     }
