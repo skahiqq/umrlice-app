@@ -39,7 +39,7 @@ class WalletController extends Controller
         Log::info(json_encode($request->all()));
 
         Spent::create([
-            'price' => $request->amount,
+            'price' => (int) $request->amount,
             'description' => $request->description
         ]);
 
