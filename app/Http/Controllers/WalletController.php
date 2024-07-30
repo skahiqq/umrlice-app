@@ -16,7 +16,7 @@ class WalletController extends Controller
 
     public function getSpents()
     {
-        return Spent::all();
+        return Spent::orderBy('created_at', 'DESC')->get();
     }
 
     public function addOrWithdrawAmount(Request $request)
