@@ -26,8 +26,7 @@ class WalletController extends Controller
         Log::info(json_encode([$request->amount]));
 
         Wallet::where('id', 1)->update([
-            'amount' => (int) $request->isAdding == true ? $wallet->amount + $request->amount : $wallet->amount - $request->amount,
-            'type' => (int) $request->isAdding == true ? 0 : 1
+            'amount' => (int) $request->isAdding == true ? $wallet->amount + $request->amount : $wallet->amount - $request->amount
         ]);
 
         Log::info("amount added");
@@ -41,7 +40,8 @@ class WalletController extends Controller
 
         $spent = Spent::create([
             'price' => (int) $request->amount,
-            'description' => $request->description
+            'description' => $request->description,
+            'type' => (int) $request->isAdding == true ? 0 : 1
         ]);
 
         return response()->json(['message' => 'Success', 'data' => $spent]);
