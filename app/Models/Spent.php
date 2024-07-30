@@ -11,6 +11,7 @@ class Spent extends Model
 
     protected $fillable = [
         'price',
-        'description'
+        'description',
+        'type'
     ];
 }
