@@ -46,4 +46,9 @@ class WalletController extends Controller
 
         return response()->json(['message' => 'Success', 'data' => $spent]);
     }
+
+    public function getSpent(Request $request)
+    {
+        return response()->json(['data' => Spent::where('id', $request->id)->first()]);
+    }
 }
