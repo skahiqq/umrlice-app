@@ -17,11 +17,23 @@ class Spent extends Model
     ];
 
     protected $appends = [
-        'month'
+        'month',
+        'day',
+        'year'
     ];
 
     public function getMonthAttribute()
     {
         return Carbon::parse($this->attributes['created_at'])->monthName;
+    }
+
+    public function getDayAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->day;
+    }
+
+    public function getYearAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->year;
     }
 }
