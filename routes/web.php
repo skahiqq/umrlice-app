@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    dd(time());
+    dd(PaymentTransaction::orderBy('created_at', 'DESC')->first()->id);
     \App\Models\Wallet::create([
         'amount' => 0
     ]);
