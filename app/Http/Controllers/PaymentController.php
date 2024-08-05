@@ -162,7 +162,7 @@ class PaymentController extends Controller
                 'Authorization' => 'Basic ' . base64_encode(env('PAYMENT_USERNAME') . ':' . env('PAYMENT_PASSWORD')),
                 'X-Signature' => '' . env('PAYMENT_SHARED_SECRET')
             ])->post(env('PAYMENT_BASE_URL') . 'api/v3/transaction/'.env('PAYMENT_API_KEY').'/void', [
-                'merchantTransactionId' => 'void-' . $preAuthorizeTransaction->transaction_id,
+                'merchantTransactionId' => 'void-' . $preAuthorizeTransaction->transaction_id . '-' . PaymentTransaction::orderBy('created_at', 'DESC')->first()->id,
                 'referenceUuid' => json_decode($preAuthorizeTransaction->data, TRUE)['uuid']
             ]);
 
