@@ -24,6 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
+    dd(time());
     \App\Models\Wallet::create([
         'amount' => 0
     ]);
