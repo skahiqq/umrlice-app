@@ -173,8 +173,7 @@ class PaymentController extends Controller
             $jsonResponse = $response->body();
 
             if (json_decode($jsonResponse, TRUE)['success'] === false) {
-               // $cart = Cart::whereUserId((int) request()->user_id)->where('data', '!=', null)->first();
-                $cart = Cart::whereUserId((int) 38)->where('data', '!=', null)->first();
+                $cart = Cart::whereUserId((int) request()->user_id)->where('data', '!=', null)->first();
 
                 if ($cart) {
                     if ($cart['data']['id'] === (int) \request()->post_id) {
