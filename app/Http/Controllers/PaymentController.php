@@ -168,7 +168,7 @@ class PaymentController extends Controller
             $jsonResponse = $response->body();
 
             if (json_decode($jsonResponse, TRUE)['success'] === false) {
-                return ["false", request()->user_id, request()->post_id];
+                return ["false", request()->user_id, request()->post_id, Cart::whereUserId((int) request()->user_id)->where('data', '!=', null)->first()];
             }
 
             PaymentTransaction::create([
