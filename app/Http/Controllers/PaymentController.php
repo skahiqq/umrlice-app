@@ -146,7 +146,6 @@ class PaymentController extends Controller
 
     /**
      * Is going to cancel a previous preauthorize payment
-     * @return \Illuminate\Http\JsonResponse|string
      */
     public function void()
     {
@@ -167,6 +166,10 @@ class PaymentController extends Controller
             ]);
 
             $jsonResponse = $response->body();
+
+            if (json_decode($jsonResponse, TRUE)['success'] === false) {
+                return ["false", request()->user_id, request()->post_id];
+            }
 
             PaymentTransaction::create([
                 'user_id' => $preAuthorizeTransaction->user_id,
