@@ -155,7 +155,7 @@ class PaymentController extends Controller
             'post_id' => request()->post_id
         ])->first();
 
-        return $preAuthorizeTransaction;
+        return $preAuthorizeTransaction ?? null;
 
         try {
             $response = Http::withHeaders([
