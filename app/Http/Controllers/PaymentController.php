@@ -155,6 +155,10 @@ class PaymentController extends Controller
         ])->first();
 
 
+        if (!$preAuthorizeTransaction) {
+            return \response()->json(['success' => true]);
+        }
+
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
