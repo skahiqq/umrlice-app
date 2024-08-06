@@ -173,7 +173,10 @@ class PaymentController extends Controller
                 $cart = Cart::whereUserId((int) 38)->where('data', '!=', null)->first();
 
                 if ($cart) {
-                    return $cart;
+                    if ($cart['data']['id'] === (int) \request()->post_id) {
+                        return response()->json(['success' => false, 'message' => 'yet']);
+                    }
+                    return \response()->json(['success' => true]);
                 }
 
                 return \response()->json(['success' => true]);
