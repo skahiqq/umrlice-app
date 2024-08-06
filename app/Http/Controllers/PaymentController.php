@@ -154,6 +154,7 @@ class PaymentController extends Controller
             'post_id' => request()->post_id
         ])->first();
 
+
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
@@ -168,10 +169,11 @@ class PaymentController extends Controller
             $jsonResponse = $response->body();
 
             if (json_decode($jsonResponse, TRUE)['success'] === false) {
-                $cart = Cart::whereUserId((int) request()->user_id)->where('data', '!=', null)->first();
+               // $cart = Cart::whereUserId((int) request()->user_id)->where('data', '!=', null)->first();
+                $cart = Cart::whereUserId((int) 92)->where('data', '!=', null)->first();
 
                 if ($cart) {
-                    dd($cart);
+                    return $cart;
                 }
 
                 return \response()->json(['success' => true]);
