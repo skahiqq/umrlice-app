@@ -155,12 +155,6 @@ class PaymentController extends Controller
             'post_id' => request()->post_id
         ])->first();
 
-        if ($preAuthorizeTransaction) {
-            return $preAuthorizeTransaction;
-        }
-
-        return \response()->json(["success" => false]);
-
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
