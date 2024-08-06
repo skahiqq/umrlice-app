@@ -159,7 +159,7 @@ class PaymentController extends Controller
             return $preAuthorizeTransaction;
         }
 
-        return \response()->json(["success" => true]);
+        return \response()->json(["success" => false]);
 
         try {
             $response = Http::withHeaders([
